@@ -7,7 +7,6 @@ defmodule FantasyPoints.Users.Changesets.User do
   alias FantasyPoints.Users.Schemas.User
 
   @params_required ~w(points)a
-  @params_optional ~w(id)a
 
   def build(user \\ %User{}, attrs)
 
@@ -17,7 +16,7 @@ defmodule FantasyPoints.Users.Changesets.User do
 
   def cast_params(user, attrs) do
     user
-    |> cast(attrs, @params_required ++ @params_optional)
+    |> cast(attrs, @params_required)
     |> validate_required(@params_required)
     |> validate_number(:points, greater_than_or_equal_to: 0)
     |> validate_number(:points, less_than_or_equal_to: 100)

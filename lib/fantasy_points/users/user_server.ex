@@ -21,6 +21,13 @@ defmodule FantasyPoints.Users.UserServer do
   end
 
   @impl true
+  def handle_call(:get_users, _from, state) do
+    users = UserAdapter.get_users(state.min_number)
+    new_state = %{state | timestamp: DateTime.utc_now()}
+    {:reply, {:ok, {state.timestamp, users}}, new_state, @timeout}
+  end
+
+  @impl true
   def handle_info(:timeout, state) do
     stream =
       Task.async_stream(1..1_000_000, fn id ->

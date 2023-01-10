@@ -3,6 +3,8 @@ defmodule FantasyPoints.Users.UserAdapter do
   This module performs database operations for user module.
   """
 
+  import Ecto.Query
+
   alias FantasyPoints.Repo
   alias FantasyPoints.Users.Changesets.User
   alias FantasyPoints.Users.Schemas.User, as: UserSchema
@@ -20,4 +22,12 @@ defmodule FantasyPoints.Users.UserAdapter do
   end
 
   def get(id), do: Repo.get(UserSchema, id, prefix: "public")
+
+  def get_users(points) do
+    UserSchema
+    |> where([u], u.points > ^points)
+    |> limit(2)
+    |> order_by([u], desc: u.points)
+    |> Repo.all()
+  end
 end
