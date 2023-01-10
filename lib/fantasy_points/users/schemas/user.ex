@@ -1,4 +1,7 @@
 defmodule FantasyPoints.Users.Schemas.User do
+  @moduledoc """
+  This module creates database schema structure for users.
+  """
   use Ecto.Schema
 
   schema "users" do

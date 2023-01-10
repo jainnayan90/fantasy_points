@@ -4,6 +4,7 @@ defmodule FantasyPoints.Application do
   @moduledoc false
 
   use Application
+  alias FantasyPoints.Users.UserServer
 
   def start(_type, _args) do
     children = [
@@ -14,9 +15,11 @@ defmodule FantasyPoints.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: FantasyPoints.PubSub},
       # Start the Endpoint (http/https)
-      FantasyPointsWeb.Endpoint
+      FantasyPointsWeb.Endpoint,
       # Start a worker by calling: FantasyPoints.Worker.start_link(arg)
       # {FantasyPoints.Worker, arg}
+      {Task.Supervisor, name: FantasyPoints.TaskSupervisor},
+      {UserServer, []}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
