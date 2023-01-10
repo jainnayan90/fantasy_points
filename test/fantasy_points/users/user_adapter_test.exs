@@ -22,4 +22,30 @@ defmodule FantasyPoints.Users.UserAdapterTest do
       assert errors != []
     end
   end
+
+  describe "update/1 - " do
+    test "updates user record if points are valid." do
+      attrs = %{points: 0}
+      assert {:ok, %User{id: id}} = UserAdapter.create(attrs)
+
+      assert %User{id: ^id} = user = UserAdapter.get(id)
+      attrs = %{points: 80}
+
+      assert {:ok, %User{points: 80}} = UserAdapter.update(user, attrs)
+    end
+
+    test "returns error if points are invalid." do
+      attrs = %{points: 0}
+      assert {:ok, %User{id: id}} = UserAdapter.create(attrs)
+
+      assert %User{id: ^id} = user = UserAdapter.get(id)
+      attrs = %{points: 130}
+
+      assert {:error, %Ecto.Changeset{}} = UserAdapter.update(user, attrs)
+
+      attrs = %{points: -100}
+
+      assert {:error, %Ecto.Changeset{}} = UserAdapter.update(user, attrs)
+    end
+  end
 end

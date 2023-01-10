@@ -12,7 +12,10 @@
 
 alias FantasyPoints.Users.UserAdapter
 
-Task.async_stream(1..1_000_000, fn _ ->
-  attrs = %{points: 0}
-  UserAdapter.create(attrs)
-end)
+stream =
+  Task.async_stream(1..1_000_000, fn _ ->
+    attrs = %{points: 0}
+    UserAdapter.create(attrs)
+  end)
+
+Stream.run(stream)

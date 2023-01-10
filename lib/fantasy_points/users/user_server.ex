@@ -2,9 +2,10 @@ defmodule FantasyPoints.Users.UserServer do
   @moduledoc """
   This module acts as a gen_server. It updates user stats.
   """
-  alias DBConnection.Task
 
   use GenServer
+
+  alias FantasyPoints.Users.UserAdapter
 
   @initial_state %{min_number: Enum.random(0..100), timestamp: nil}
   @timeout 60_000
@@ -19,15 +20,25 @@ defmodule FantasyPoints.Users.UserServer do
     {:ok, @initial_state, @timeout}
   end
 
-  # @impl true
-  # def handle_info(:timeout, state) do
+  @impl true
+  def handle_info(:timeout, state) do
+    stream =
+      Task.async_stream(1..1_000_000, fn id ->
+        id
+        |> UserAdapter.get()
+        |> case do
+          nil ->
+            :ok
 
-  #   min_number = Enum.random(0..100)
-  #   state = %{state | min_number: min_number}
-  #   {:noreply, state, @timeout}
-  # end
+          %_{id: ^id} = user ->
+            UserAdapter.update(user, %{points: Enum.random(0..100)})
+        end
+      end)
 
-  # defp update_user_points() do
+    Stream.run(stream)
 
-  # end
+    min_number = Enum.random(0..100)
+    state = %{state | min_number: min_number}
+    {:noreply, state, @timeout}
+  end
 end
