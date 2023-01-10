@@ -3,7 +3,6 @@ defmodule FantasyPoints.Users.Changesets.UserTest do
   doctest FantasyPoints.Users.Changesets.User
 
   alias FantasyPoints.Users.Changesets.User, as: UserChangeset
-  alias FantasyPoints.Users.Schemas.User
 
   describe "build/2 - " do
     test "creates a valid changeset when only required params are provided." do

@@ -16,7 +16,7 @@ defmodule FantasyPointsWeb.Router do
   scope "/", FantasyPointsWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    get "/", UserController, :index
   end
 
   # Other scopes may use custom stacks.
