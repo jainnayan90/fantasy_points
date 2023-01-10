@@ -1,17 +1,16 @@
-defmodule FantasyPoints.Changesets.User do
+defmodule FantasyPoints.Users.Changesets.User do
   @moduledoc """
   Module to implement user changeset.
   """
   import Ecto.Changeset
 
-  alias FantasyPoints.Schemas.User
+  alias FantasyPoints.Users.Schemas.User
 
   @params_required ~w(points)a
 
   def build(user \\ %User{}, attrs)
 
   def build(user, %_{} = attrs), do: cast_params(user, Map.from_struct(attrs))
-
 
   def build(user, attrs), do: cast_params(user, attrs)
 

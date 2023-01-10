@@ -1,4 +1,4 @@
-defmodule FantasyPoints.Schemas.User do
+defmodule FantasyPoints.Users.Schemas.User do
   use Ecto.Schema
 
   schema "users" do

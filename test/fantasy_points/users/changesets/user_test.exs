@@ -1,12 +1,11 @@
-defmodule FantasyPoints.Changesets.UserTest do
+defmodule FantasyPoints.Users.Changesets.UserTest do
   use ExUnit.Case
-  doctest FantasyPoints.Changesets.User
+  doctest FantasyPoints.Users.Changesets.User
 
-  alias FantasyPoints.Changesets.User, as: UserChangeset
-  alias FantasyPoints.Schemas.User
+  alias FantasyPoints.Users.Changesets.User, as: UserChangeset
+  alias FantasyPoints.Users.Schemas.User
 
   describe "build/2 - " do
-
     test "creates a valid changeset when only required params are provided." do
       attrs = %{points: 20}
       assert %Ecto.Changeset{changes: %{points: 20}, errors: []} = UserChangeset.build(attrs)
