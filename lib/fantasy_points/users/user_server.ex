@@ -29,6 +29,14 @@ defmodule FantasyPoints.Users.UserServer do
 
   @impl true
   def handle_info(:timeout, state) do
+    Task.async(fn -> update_user_points() end)
+
+    min_number = Enum.random(0..100)
+    state = %{state | min_number: min_number}
+    {:noreply, state, @timeout}
+  end
+
+  defp update_user_points() do
     stream =
       Task.async_stream(1..1_000_000, fn id ->
         id
@@ -43,9 +51,5 @@ defmodule FantasyPoints.Users.UserServer do
       end)
 
     Stream.run(stream)
-
-    min_number = Enum.random(0..100)
-    state = %{state | min_number: min_number}
-    {:noreply, state, @timeout}
   end
 end
